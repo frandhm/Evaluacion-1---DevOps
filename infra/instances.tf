@@ -39,8 +39,11 @@ resource "aws_instance" "inovatech_backend" {
                 apt update -y
                 apt upgrade -y
                 apt install docker.io -y
+                apt install openjdk-17-jdk -y
+                
                 systemctl start docker
                 systemctl enable docker
+
                 EOF
 
     tags = {
