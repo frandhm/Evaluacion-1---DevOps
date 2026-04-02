@@ -1,6 +1,6 @@
 resource "aws_instance" "inovatech_frontend" {
-  ami = "ami-0c02fb55956c7d316"
-  instance_type = "t2.micro"
+  ami = "ami-0ec10929233384c7f"
+  instance_type = "t3.micro"
   
   key_name = "inovatech-key"
 
@@ -25,8 +25,8 @@ resource "aws_instance" "inovatech_frontend" {
 }
 
 resource "aws_instance" "inovatech_backend" {
-  ami = "ami-0c02fb55956c7d316"
-  instance_type = "t2.micro"
+  ami = "ami-0ec10929233384c7f"
+  instance_type = "t3.micro"
 
   key_name = "inovatech-key"
 
@@ -52,8 +52,8 @@ resource "aws_instance" "inovatech_backend" {
 }
 
 resource "aws_instance" "inovatech_database" {
-  ami = "ami-0c02fb55956c7d316"
-  instance_type = "t2.micro"
+  ami = "ami-0ec10929233384c7f"
+  instance_type = "t3.micro"
 
   key_name = "inovatech-key"
 
