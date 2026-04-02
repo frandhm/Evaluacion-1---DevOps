@@ -1,5 +1,6 @@
 resource "aws_security_group" "frontend_sg" {
   name = "inovatech-frontend"
+  vpc_id = aws_vpc.main.id
 
   ingress {
     from_port = 80
@@ -26,7 +27,8 @@ resource "aws_security_group" "frontend_sg" {
 
 resource "aws_security_group" "backend_sg" {
   name = "inovatech-backend"
-
+  vpc_id = aws_vpc.main.id
+  
   ingress {
     from_port       = 80
     to_port         = 80
@@ -51,7 +53,8 @@ resource "aws_security_group" "backend_sg" {
 
 resource "aws_security_group" "db_sg" {
   name = "inovatech-db"
-
+  vpc_id = aws_vpc.main.id
+  
   ingress {
     from_port       = 3306
     to_port         = 3306

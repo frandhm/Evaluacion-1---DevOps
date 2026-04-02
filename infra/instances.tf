@@ -1,7 +1,7 @@
 resource "aws_instance" "inovatech_frontend" {
   ami = "ami-0c02fb55956c7d316"
   instance_type = "t2.micro"
-
+  
   key_name = "inovatech-key"
 
   vpc_security_group_ids = [aws_security_group.frontend_sg.id]
