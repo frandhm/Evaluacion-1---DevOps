@@ -32,7 +32,7 @@ resource "aws_instance" "inovatech_backend" {
 
   vpc_security_group_ids = [aws_security_group.backend_sg.id]
 
-  subnet_id = aws_subnet.private_app.id
+  subnet_id = aws_subnet.private.id
 
   user_data = <<-EOF
                 #!/bin/bash
@@ -59,7 +59,7 @@ resource "aws_instance" "inovatech_database" {
 
   vpc_security_group_ids = [aws_security_group.db_sg.id]
 
-  subnet_id = aws_subnet.private_app.id
+  subnet_id = aws_subnet.private.id
 
   user_data = <<-EOF
                 #!/bin/bash
