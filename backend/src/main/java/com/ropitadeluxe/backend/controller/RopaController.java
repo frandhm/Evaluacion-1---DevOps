@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Fernando
  */
 @RestController
-@RequestMapping("/api/ropass")
+@RequestMapping("/api/ropas")
 @CrossOrigin("*")
 public class RopaController {
     private final RopaRepository repository;
