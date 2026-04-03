@@ -36,14 +36,29 @@ resource "aws_instance" "inovatech_backend" {
 
   user_data = <<-EOF
                 #!/bin/bash
+
                 apt update -y
                 apt upgrade -y
-                apt install docker.io -y
-                apt install openjdk-17-jdk -y
-                
+
+                apt install openjdk-17-jdk maven git docker.io -y
+
                 systemctl start docker
                 systemctl enable docker
 
+                usermod -aG docker ubuntu
+
+                cd /home/ubuntu
+
+                git clone https://github.com/frandhm/Evaluacion-1---DevOps.git
+
+
+                cd Evaluacion-1---DevOps/backend
+
+                mvn clean package -DskipTests
+
+                sleep 30
+
+                nohup java -jar target/*.jar > /home/ubuntu/app.log 2>&1 &
                 EOF
 
     tags = {
