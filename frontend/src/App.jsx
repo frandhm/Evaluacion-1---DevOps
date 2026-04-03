@@ -6,9 +6,9 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
-    fetch("http://localhost:8080/api/productos")
+    fetch("http://localhost:8080/api/ropas")
     .then(resp=>{
-      if(!resp.ok) throw new Error("Error al obtener productos")
+      if(!resp.ok) throw new Error("Error al obtener los productos")
       return resp.json()
     }).then(data=>{
       setProductos(data)
