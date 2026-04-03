@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
+import Card from "./Card.jsx";
 import "./App.css"
 
 function App() {
   const [productos, setProductos] = useState([])
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
     fetch("http://10.0.2.20:8080/api/ropas")
@@ -31,15 +33,13 @@ function App() {
       </header>
 
       <main className="main-content">
-        <div className="productos">
-          {loading && <p>Cargando productos...</p>}
-          {error && <p>Error: {error}</p>}
-          {productos.map(productos => (
-            <div key={productos.id}>
-              <h2>{productos.nombre}</h2>
-              <p>{productos.descripcion}</p>
-              <strong>{productos.precio}</strong>
-            </div>
+        {loading && <p className="mensaje-estado">Cargando productos...</p>}
+        {error && <p className="mensaje-estado error">Error: {error}</p>}
+
+        {/* Aquí va el grid de productos */}
+        <div className="productos-grid">
+          {productos.map(producto => (
+            <Card key={producto.id} producto={producto} />
           ))}
         </div>
       </main>
