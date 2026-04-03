@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import Card from "./Card.jsx";
 import "./App.css"
 
 function App() {
@@ -6,35 +7,45 @@ function App() {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(()=>{
-    fetch("http://localhost:8080/api/ropas")
-    .then(resp=>{
-      if(!resp.ok) throw new Error("Error al obtener los productos")
-      return resp.json()
-    }).then(data=>{
-      setProductos(data)
-      setLoading(false)
-    }).catch(ex=>{
-      setError(ex.message)
-      setLoading(false)
-    })
-  },[])
+
+  useEffect(() => {
+    fetch("http://10.0.2.20:8080/api/ropas")
+      .then(resp => {
+        if (!resp.ok) throw new Error("Error al obtener los productos")
+        return resp.json()
+      }).then(data => {
+        setProductos(data)
+        setLoading(false)
+      }).catch(ex => {
+        setError(ex.message)
+        setLoading(false)
+      })
+  }, [])
 
   return (
-    <div>
-      <h1>Ropa los overwarriors</h1>
-      {loading && <p>Cargando productos...</p>}
-      {error && <p>Error: {error}</p>}
+    <div className="layout-container">
+      <header className="header">
+        <div className="header-side left">
+          <img className="logo-img" src="./src/assets/overwatch.png" alt="" />
+        </div>
+        <h1 className="header-title">Tienda los OverWarriors</h1>
+        <div className="header-side right"></div>
+      </header>
 
-      <ul>
-        {productos.map(productos=>(
-          <li key={productos.id}>
-            <h2>{productos.nombre}</h2>
-            <p>{productos.descripcion}</p>
-            <strong>{productos.precio}</strong>
-          </li>
-        ))}
-      </ul>
+      <main className="main-content">
+        {loading && <p className="mensaje-estado">Cargando productos...</p>}
+        {error && <p className="mensaje-estado error">Error: {error}</p>}
+
+        {/* Aquí va el grid de productos */}
+        <div className="productos-grid">
+          {productos.map(producto => (
+            <Card key={producto.id} producto={producto} />
+          ))}
+        </div>
+      </main>
+      <footer>
+        <p>Derechos reservados &copy; 2026 Ropa los overwarriors</p>
+      </footer>
     </div>
   )
 }
