@@ -9,7 +9,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch("http://10.0.2.20:8080/api/ropas")
+    fetch("/api/ropas")
       .then(resp => {
         if (!resp.ok) throw new Error("Error al obtener los productos")
         return resp.json()
