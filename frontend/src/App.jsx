@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import "./App.css"
 
 function App() {
   const [productos, setProductos] = useState([])
@@ -21,7 +22,7 @@ function App() {
 
   return (
     <div>
-      <h1>SPA Relax</h1>
+      <h1>Ropa los overwarriors</h1>
       {loading && <p>Cargando productos...</p>}
       {error && <p>Error: {error}</p>}
 
