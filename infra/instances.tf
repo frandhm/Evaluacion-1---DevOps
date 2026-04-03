@@ -34,6 +34,8 @@ resource "aws_instance" "inovatech_backend" {
 
   subnet_id = aws_subnet.private.id
 
+  private_ip = "10.0.2.20"
+
   user_data = <<-EOF
                 #!/bin/bash
 
