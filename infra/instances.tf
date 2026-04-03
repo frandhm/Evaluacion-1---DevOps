@@ -12,11 +12,29 @@ resource "aws_instance" "inovatech_frontend" {
                 #!/bin/bash
                 apt update -y
                 apt upgrade -y
-                apt install nginx docker.io -y
+
+                apt install nginx nodejs npm git docker.io -y
+
                 systemctl start nginx
                 systemctl enable nginx
                 systemctl start docker
                 systemctl enable docker
+
+                cd /home/ubuntu
+
+                git clone https://github.com/frandhm/Evaluacion-1---DevOps.git
+
+                cd Evaluacion-1---DevOps/frontend
+
+                npm install
+
+                npm run build
+
+                rm -rf /var/www/html/*
+
+                cp -r dist/* /var/www/html/
+
+                systemctl restart nginx
                 EOF
 
     tags = {
