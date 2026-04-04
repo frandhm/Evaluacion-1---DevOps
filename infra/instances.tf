@@ -206,10 +206,10 @@ resource "aws_instance" "inovatech_database" {
                     precio DOUBLE
                 );"
 
-                mysql ropitadb -e "INSERT IGNORE INTO ropa (id, nombre, descripcion, precio) VALUES
-                (1, 'Polera básica', 'Polera de algodón', 9990),
-                (2, 'Jeans azul', 'Jeans clásico azul', 24990),
-                (3, 'Chaqueta', 'Chaqueta de invierno', 39990);"
+                mysql ropitadb -e "INSERT IGNORE INTO ropa (id, nombre, descripcion, precio, imagen) VALUES
+                (1, 'Polera básica', 'Polera de algodón', 9990, 'https://m.media-amazon.com/images/I/61dI1ura9YL.jpg'),
+                (2, 'Jeans azul', 'Jeans clásico azul', 24990, 'https://fashionspark.com/cdn/shop/files/p-670692702-1.jpg?v=1751044303'),
+                (3, 'Chaqueta', 'Chaqueta de invierno', 39990, 'https://gear.blizzard.com/cdn/shop/products/OVERMJ0005_A.jpg?v=1756835889&width=1445&logged_in_customer_id=&lang=es');"
 
                 echo "=== Verificando datos ==="
                 mysql ropitadb -e "SELECT * FROM ropa;"

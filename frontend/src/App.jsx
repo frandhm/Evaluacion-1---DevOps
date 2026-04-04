@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Card from "./Card.jsx";
 import "./App.css"
+import logo from "./assets/overwatch.png"
 
 function App() {
   const [productos, setProductos] = useState([])
@@ -26,7 +27,7 @@ function App() {
     <div className="layout-container">
       <header className="header">
         <div className="header-side left">
-          <img className="logo-img" src="./src/assets/overwatch.png" alt="" />
+          <img className="logo-img" src={logo} alt="logo" />
         </div>
         <h1 className="header-title">Tienda los OverWarriors</h1>
         <div className="header-side right"></div>
