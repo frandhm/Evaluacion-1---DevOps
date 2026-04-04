@@ -15,14 +15,16 @@ public class Ropa {
     private String nombre;
     private String descripcion;
     private Double precio;
+    private String imagen;
 
     public Ropa() {
     }
 
-    public Ropa(String nombre, String descripcion, Double precio) {
+    public Ropa(String nombre, String descripcion, Double precio, String imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
+        this.imagen = imagen;
     }
 
     public Long getId() {
@@ -57,4 +59,11 @@ public class Ropa {
         this.precio = precio;
     }
     
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }

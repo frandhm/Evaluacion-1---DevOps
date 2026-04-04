@@ -7,6 +7,7 @@ function Card({ producto }) {
                 src={producto.imagen}
                 alt={producto.nombre}
                 className="card-image"
+                onError={(e) => e.target.src = '/placeholder.png'}
             />
             <div className="card-body">
                 <h2 className="card-title">{producto.nombre}</h2>
