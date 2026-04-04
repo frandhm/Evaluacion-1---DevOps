@@ -102,12 +102,13 @@ resource "aws_instance" "inovatech_backend" {
                 set -e
                 exec > /var/log/user-data.log 2>&1
 
+                export DEBIAN_FRONTEND=noninteractive
+
                 echo "=== Actualizando sistema ==="
                 apt update -y
-                apt upgrade -y
 
-                echo "=== Instalando Java, Maven y Git ==="
-                apt install -y openjdk-17-jdk maven git ca-certificates curl gnupg lsb-release
+                echo "=== Instalando Java, Maven, Git y mysql-client ==="
+                apt install -y openjdk-17-jdk maven git ca-certificates curl gnupg lsb-release mysql-client
                 java -version
                 mvn -version
 
@@ -128,25 +129,52 @@ resource "aws_instance" "inovatech_backend" {
                 chown -R ubuntu:ubuntu /home/ubuntu/Evaluacion-1---DevOps
 
                 echo "=== Esperando que la base de datos esté lista ==="
-                apt install -y mysql-client
+                set +e
                 until mysql -h 10.0.2.10 -u backend -propa ropitadb -e "SELECT 1;" > /dev/null 2>&1; do
                     echo "Esperando DB en 10.0.2.10..."
                     sleep 5
                 done
+                set -e
                 echo "Base de datos lista"
 
                 echo "=== Compilando backend ==="
                 cd /home/ubuntu/Evaluacion-1---DevOps/backend
                 sudo -u ubuntu mvn clean package -DskipTests
 
-                echo "=== Iniciando aplicación ==="
-                sudo -u ubuntu nohup java -jar target/*.jar > /home/ubuntu/app.log 2>&1 &
+                echo "=== Encontrando nombre del jar ==="
+                JAR_FILE=$(ls /home/ubuntu/Evaluacion-1---DevOps/backend/target/*.jar | head -1)
+                echo "Jar encontrado: $JAR_FILE"
+
+                echo "=== Creando servicio systemd ==="
+                cat > /etc/systemd/system/backend.service << SERVICE
+                [Unit]
+                Description=Spring Boot Backend
+                After=network.target
+
+                [Service]
+                User=ubuntu
+                WorkingDirectory=/home/ubuntu/Evaluacion-1---DevOps/backend
+                ExecStart=/usr/bin/java -jar $JAR_FILE
+                Restart=always
+                RestartSec=10
+                StandardOutput=append:/home/ubuntu/app.log
+                StandardError=append:/home/ubuntu/app.log
+
+                [Install]
+                WantedBy=multi-user.target
+                SERVICE
+
+                systemctl daemon-reload
+                systemctl enable backend
+                systemctl start backend
 
                 echo "=== Esperando que el backend levante ==="
+                set +e
                 until curl -s http://localhost:8080/api/ropas > /dev/null 2>&1; do
                     echo "Esperando backend..."
                     sleep 5
                 done
+                set -e
 
                 echo "=== Backend listo ==="
                 EOF
@@ -187,10 +215,12 @@ resource "aws_instance" "inovatech_database" {
                 systemctl restart mysql
 
                 echo "=== Esperando que MySQL esté listo ==="
+                set +e
                 until mysqladmin ping -h localhost --silent; do
                     echo "Esperando MySQL..."
                     sleep 2
                 done
+                set -e
 
                 echo "=== Configurando base de datos ==="
                 mysql -e "CREATE DATABASE IF NOT EXISTS ropitadb;"
@@ -203,7 +233,8 @@ resource "aws_instance" "inovatech_database" {
                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
                     nombre VARCHAR(255),
                     descripcion VARCHAR(255),
-                    precio DOUBLE
+                    precio DOUBLE,
+                    imagen VARCHAR(500)
                 );"
 
                 mysql ropitadb -e "INSERT IGNORE INTO ropa (id, nombre, descripcion, precio, imagen) VALUES
