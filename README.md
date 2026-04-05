@@ -96,11 +96,7 @@ Para entornos reales conviene externalizar secretos (AWS Systems Manager Paramet
 
 ## Diagrama de arquitectura
 
-![Diagrama de arquitectura AWS](https://drive.google.com/uc?export=view&id=1H52j5OO8psFqt-cEjZezKyiKbpAmu9CB)
-
-[Abrir diagrama en Google Drive](https://drive.google.com/file/d/1H52j5OO8psFqt-cEjZezKyiKbpAmu9CB/view?usp=sharing)
-
-*Si la imagen no aparece en GitHub (Drive a veces bloquea la vista incrustada), usa el enlace anterior.*
+![Diagrama de arquitectura AWS](./Diagrama%20de%20Arquitectura.jpeg)
 
 ## Aplicación (referencia)
 
