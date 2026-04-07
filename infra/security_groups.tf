@@ -85,5 +85,3 @@ resource "aws_security_group" "db_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-#Preguntar si es necesario que el SSH esté abierto en todos los grupos de seguridad
